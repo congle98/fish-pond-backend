@@ -1,14 +1,8 @@
-version: '3.9'
-
+version: '2'
 services:
-  mysql:
-    image: mysql:8
+  fishpond-backend:
+    build: .
+    image: fishpond-backend
+    container_name: fishpond-backend
     ports:
-      - 3306:3306
-    volumes:
-      - ~/apps/mysql:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=mysql123456
-      - MYSQL_PASSWORD=mysql123
-      - MYSQL_USER=mysql123
-      - MYSQL_DATABASE=fishpond
+      - 8080:8080
