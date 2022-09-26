@@ -12,10 +12,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 public class AquaticInformationServiceImpl implements AquaticInformationService {
@@ -48,7 +48,12 @@ public class AquaticInformationServiceImpl implements AquaticInformationService 
 
     @Override
     public Page<AquaticInformation> findAllByDeviceId(Long deviceId, Pageable pageable) {
-        return aquaticInformationRepository.findAllByDevice(deviceId,pageable);
+        Page<AquaticInformation> page = aquaticInformationRepository.findAllByDevice(deviceId,pageable);
+        List<AquaticInformation> aquaticInformationList = new ArrayList<>();
+        for (int i = page.getContent().size()-1; i >=0 ; i--) {
+            aquaticInformationList.add(page.getContent().get(i));
+        }
+        return new PageImpl<>(aquaticInformationList,pageable,aquaticInformationList.size());
     }
 
 

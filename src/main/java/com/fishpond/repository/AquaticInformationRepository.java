@@ -67,11 +67,11 @@ public interface AquaticInformationRepository extends JpaRepository<AquaticInfor
             value = " select * from (select aquaticInformation.* from aquatic_information aquaticInformation inner join device device on aquaticInformation.device_id = device.id" +
                     " inner join fish_pond fishPond on device.fish_pond_id = fishPond.id " +
                     " inner join user user on fishPond.user_id = user.id" +
-                    " where device.id = ?1 ) as a order by a.create_date asc",
-            countQuery = " select count(*) from aquatic_information aquaticInformation inner join device device on aquaticInformation.device_id = device.id" +
+                    " where device.id = ?1 ) as a order by a.create_date desc",
+            countQuery = " select * from (select aquaticInformation.* from aquatic_information aquaticInformation inner join device device on aquaticInformation.device_id = device.id" +
                     " inner join fish_pond fishPond on device.fish_pond_id = fishPond.id " +
                     " inner join user user on fishPond.user_id = user.id" +
-                    " where device.id = ?1 ",
+                    " where device.id = ?1 ) as a order by a.create_date desc",
             nativeQuery = true)
     Page<AquaticInformation> findAllByDevice(Long deviceId,Pageable pageable);
 
